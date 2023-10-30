@@ -25,17 +25,30 @@ class TTTBoard:
         self.board[pos] = player
         return True
 
-    # def game_over(self) -> bool:
-       # return False
+    def game_over(self) -> bool:
+        if self.has_won('X') or self.has_won('O'):
+            return True
+        temp = False
+        for x in self.board:
+            if x == '*':
+                return False
+        return True
+
     def has_won(self, player) -> bool:
-        for x in self.board[0, 1, 2]:
-            if self.board[x + 0] and self.board[x + 3] and self.board[x + 6] == player:
+        for x in [0, 1, 2]:
+            if self.board[x + 0] == player and self.board[x + 3] == player and self.board[x + 6] == player:
                 return True
-        for x in self.board [0, 3, 6]:
-            if self.board[x+0] and self.board[x+1] and self.board[x+2] == player:
+        for x in [0, 3, 6]:
+            if self.board[x+0] == player and self.board[x+1] == player and self.board[x+2] == player:
                 return True
+        if self.board[0] == player and self.board[4] == player and self.board[8] == player:
+            return True
+        elif self.board[2] == player and self.board[4] == player and self.board[6] == player:
+            return True
+        return False
             
-    # def clear(self):
+    def clear(self):
+        self.board = ['*'] * 9
 
 
 
@@ -101,17 +114,21 @@ if __name__ == "__main__":
     brd.make_move("O", 6)
     brd.make_move("X", 2)
 
+    print(brd)
+
     assert brd.has_won("X") == True
     assert brd.has_won("O") == False
     assert brd.game_over() == True
 
     brd.clear()
+    print(brd)
 
     assert brd.game_over() == False
 
     brd.make_move("O", 3)
     brd.make_move("O", 4)
     brd.make_move("O", 5)
+    print(brd)
 
     assert brd.has_won("X") == False
     assert brd.has_won("O") == True
@@ -120,4 +137,4 @@ if __name__ == "__main__":
     print("All tests passed!")
 
     # uncomment to play!
-    # play_tic_tac_toe()
+    play_tic_tac_toe()
